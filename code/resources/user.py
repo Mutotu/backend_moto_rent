@@ -1,0 +1,55 @@
+from flask_restful import Resource, reqparse
+from models.user import UserModel
+
+
+class UserRegister(Resource):
+    
+    TABLE_NAME = 'users'
+    
+    parser = reqparse.RequestParser()
+    
+    parser.add_argument('username', 
+                        type=str, 
+                        required=True, 
+                        help="This field cannot be left blank")
+    
+    parser.add_argument('password',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('first_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('last_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    parser.add_argument('age',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    # parser.add_argument('role',
+    #                     type=str,
+    #                     required=True,
+    #                     help="This field cannot be left blank!"
+    #                     )
+    parser.add_argument('email',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank!"
+                        )
+    
+    def post(self):
+        
+        data = UserRegister.parser.parse_args()
+        
+        if UserModel.find_by_username(data['username']) or  UserModel.find_by_username(data['email']):
+            return {'message': 'User with that username/email already exists'}, 400
+        user = UserModel(**data)
+        user.save_to_db()
+        return {'message': 'User created successfully'}, 201
