@@ -10,7 +10,7 @@ class MotorcycleModel(db.Model):
     make = db.Column( db.String, nullable=False)
     model=db.Column( db.String, nullable=False)
     year=db.Column(db.String, nullable=False)
-    price=db.Column(db.Float, nullable=False)
+    price=db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     photo = db.Column(db.String, nullable=False)
     
@@ -21,7 +21,6 @@ class MotorcycleModel(db.Model):
     # comments = db.relationship("Comments", backref="motorcycles", lazy=True, cascade="all,delete")
     
     def __init__(self,user_id, make,model,year,price,description,photo):
-        # self.id=id
         self.user_id = user_id
         self.make = make
         self.model = model
@@ -34,7 +33,7 @@ class MotorcycleModel(db.Model):
         return {
             "motorcycle" : {
             "id":self.id,
-            # 'user_id':self.user_id,
+            # "user_id": user_id,
             'make':self.make,
             'model':self.model,
             'year':self.year,
@@ -53,8 +52,10 @@ class MotorcycleModel(db.Model):
     
             
     def save_to_db(self):
-        db.session.add(self)
+        
+        db.session.add(self)      
         db.session.commit()
+
 
     
     def delete_from_db(self):

@@ -39,19 +39,12 @@ class Motorcycle(Resource):
                         required=True,
                         help="This field cannot be left blank!"
                         )
-    # parser.add_argument('user_id',
-    #                     type=int,
-    #                     required=True,
-    #                     help="This field cannot be left blank!"
-    #                     )
-    # ##########3 not receving user_id 
+
     def post(self):
         data = Motorcycle.parser.parse_args()
         user_id = request.headers.get('user_id')
         data['user_id'] = user_id
         motorcycle = MotorcycleModel(**data)
-        print(data,"#########")
-        print(motorcycle,"#########")
       
         try:
             motorcycle.save_to_db()
@@ -88,6 +81,6 @@ class Motorcycle(Resource):
     
     
     
-    class MotoList(Resource):
-        def get(self):
-            return {'motos': [moto.json() for moto in MotorcycleModel.query.all()]}
+class MotoList(Resource):
+    def get(self):
+        return {'motos': [moto.json() for moto in MotorcycleModel.query.all()]}
