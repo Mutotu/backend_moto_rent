@@ -5,8 +5,8 @@ from flask_jwt_extended import JWTManager
 # no longer needed
 # from security import authenticate, identity
 from resources.user import UserRegister, UserLogin, User
-# from resources.motorcyle import Motorcycle, MotoList, MotoModify
-# from resources.comment import Comment
+from resources.motorcyle import Motorcycle, MotoList, MotoModify
+from resources.comment import Comment
 
 
 from db import db
@@ -36,10 +36,10 @@ def create_tables():
 jwt = JWTManager(app)
 
 api.add_resource(UserRegister, '/register')
-# api.add_resource(Motorcycle, '/post')
-# api.add_resource(MotoModify, '/moto/<int:id>')
-# api.add_resource(MotoList, '/motos')
-# api.add_resource(Comment, '/comment')
+api.add_resource(Motorcycle, '/post')
+api.add_resource(MotoModify, '/moto/<int:id>')
+api.add_resource(MotoList, '/motos')
+api.add_resource(Comment, '/comment/<int:moto_id>')
 api.add_resource(UserLogin, '/login')
 api.add_resource(User, '/user/<int:user_id>')
 

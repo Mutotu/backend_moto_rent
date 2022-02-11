@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.motorcycle import MotorcycleModel
+from flask_jwt_extended import jwt_required
 #to get the headers
 from flask import request
 
@@ -55,6 +56,7 @@ class Motorcycle(Resource):
     
 class MotoModify(Resource):
     
+    # @jwt_required  # No longer needs brackets
     def get(self, id):
         motorcycle = MotorcycleModel.find_by_id(id)
         if motorcycle:

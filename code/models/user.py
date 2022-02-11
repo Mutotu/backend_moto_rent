@@ -15,8 +15,8 @@ class UserModel(db.Model):
     password = db.Column(db.String(120), nullable=False)
     # role = db.Column( db.String, nullable=False)
     
-    # motorcycles = db.relationship("MotorcycleModel", backref="users", lazy='dynamic')
-    # comments  = db.relationship("Comments", backref="users", lazy=True)
+    motorcycles = db.relationship("MotorcycleModel", backref="users", lazy='dynamic')
+    comments  = db.relationship("CommentModel", backref="users", lazy=True)
     # rents =  db.relationship("Rents", backref="users", lazy=True)
     
 
