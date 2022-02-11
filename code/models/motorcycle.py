@@ -17,8 +17,8 @@ class MotorcycleModel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     user = db.relationship('UserModel', backref="users", uselist=False)
-    # rents = db.relationship("Rents", backref="motorcycles", lazy=True,cascade="all,delete")
-    # comments = db.relationship("Comments", backref="motorcycles", lazy=True, cascade="all,delete")
+    rents = db.relationship("Rents", backref="motorcycles", lazy=True,cascade="all,delete")
+    comments = db.relationship("Comments", backref="motorcycles", lazy=True, cascade="all,delete")
     
     def __init__(self,user_id, make,model,year,price,description,photo):
         self.user_id = user_id
@@ -41,7 +41,7 @@ class MotorcycleModel(db.Model):
             'description':self.description,
             'photo':self.photo
             }, 
-            # "comments":[comment.json() for comment in self.comments.all()]
+            "comments":[comment.json() for comment in self.comments.all()]
         }
         
     @classmethod
