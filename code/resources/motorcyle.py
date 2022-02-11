@@ -53,6 +53,8 @@ class Motorcycle(Resource):
         return motorcycle.json(), 201
         
     
+class MotoModify(Resource):
+    
     def get(self, id):
         motorcycle = MotorcycleModel.find_by_id(id)
         if motorcycle:
@@ -68,15 +70,16 @@ class Motorcycle(Resource):
  
  
     def put(self, id):
-        data = Motorcycle.parse_arg()
+        data = Motorcycle.parser.parse_args()
         motorcycle = MotorcycleModel.find_by_id(id)
-        if id is None:
-            motorcycle = MotorcycleModel(id, data['make'], data['model'], data['year'], data['price'], data['description'], data['photo'])
-        else:
-            motorcycle = {**data}
+
+        user_id = request.headers.get('user_id')
+        data['user_id'] = user_id
+        # motorcycle =MotorcycleModel(**data)
+        motorcycle = MotorcycleModel(data["user_id"], data["make"],data["model"], data["year"], data["price"], data["description"] ,data["photo"])
         motorcycle.save_to_db()
-        
-        return data.json()
+        print(motorcycle)
+        return motorcycle.json()
     
     
     

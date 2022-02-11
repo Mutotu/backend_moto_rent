@@ -4,7 +4,7 @@ from flask_jwt import JWT
 
 from security import authenticate, identity
 from resources.user import UserRegister
-from resources.motorcyle import Motorcycle, MotoList
+from resources.motorcyle import Motorcycle, MotoList, MotoModify
 
 
 from db import db
@@ -33,7 +33,8 @@ def create_tables():
 jwt = JWT(app, authenticate, identity)
 
 api.add_resource(UserRegister, '/register')
-api.add_resource(Motorcycle, '/bike')
+api.add_resource(Motorcycle, '/post')
+api.add_resource(MotoModify, '/moto/<int:id>')
 api.add_resource(MotoList, '/motos')
 
 if __name__ == '__main__':
