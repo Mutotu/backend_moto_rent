@@ -15,11 +15,11 @@ class UserModel(db.Model):
     password = db.Column(db.String(120), nullable=False)
     # role = db.Column( db.String, nullable=False)
     
-    motorcycles = db.relationship("MotorcycleModel", backref="users", lazy='dynamic')
-    comments  = db.relationship("Comments", backref="users", lazy=True)
-    rents =  db.relationship("Rents", backref="users", lazy=True)
+    # motorcycles = db.relationship("MotorcycleModel", backref="users", lazy='dynamic')
+    # comments  = db.relationship("Comments", backref="users", lazy=True)
+    # rents =  db.relationship("Rents", backref="users", lazy=True)
     
-    TABLE_NAME = 'users'
+
     
     def __init__(self, first_name, last_name, age, email,username, password):
         self.first_name = first_name
@@ -48,6 +48,10 @@ class UserModel(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+    
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
     
     def save_to_db(self):
         db.session.add(self)

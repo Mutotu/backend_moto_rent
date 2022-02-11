@@ -1,4 +1,5 @@
 from db import db
+from models.motorcyle import MotorcycleModel
 
 class RentModel(db.Model):
     
@@ -36,12 +37,12 @@ class RentModel(db.Model):
         days = int(self.end_date[-2:]) - int(self.start_date[-2:])
         
         
-        moto_qs = Motorcycles.query.filter_by(id=moto_id)
-        print(moto_qs)
+        moto_qs = MotorcycleModel.query.filter_by_id(id=moto_id)
+        # print(moto_qs)
         
         if moto_qs:
             moto = moto_qs.first()
-            print(moto)
-            print(moto.price)
+            # print(moto)
+            # print(moto.price)
             return moto.price * days
         return 0  
