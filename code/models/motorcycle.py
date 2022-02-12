@@ -17,7 +17,7 @@ class MotorcycleModel(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     # user = db.relationship('UserModel', backref="users", uselist=False)
-    # rents = db.relationship("RentModel", backref="motorcycles", lazy=True,cascade="all,delete")
+    rents = db.relationship("RentModel", backref="motorcycles", lazy=True,cascade="all,delete")
     comments = db.relationship("CommentModel", backref="motorcycles",  uselist=True,cascade="all,delete")
     
     def __init__(self,user_id, make,model,year,price,description,photo):
