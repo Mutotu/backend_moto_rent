@@ -40,19 +40,16 @@ class Comment(Resource):
     def post(self,moto_id):
         data = Comment.parser.parse_args()
         user_id = request.headers.get('user_id')
-        # moto_id = request.headers.get('moto_id')
+        moto_id = request.headers.get('moto_id')
         moto = MotorcycleModel.find_by_id(id=moto_id)
-        # print(moto_id)
-        if moto:
-            data['user_id'] = user_id
-            data["moto_id"] = moto_id
 
-        
-        # comment = CommentModel(**data)
-        # print(comment)
-        # # try:
-        #     comment.save_to_db()
-        # except:
-        #     return {'message': 'An error occred while creating a comment'}, 500
-        # return comment.json(), 201
-        return 'oko'
+        if moto:         
+            comment = CommentModel(user_id, moto_id, data["title"], data["comment"] )
+         
+            try:
+                comment.save_to_db()
+            except Exception as e:
+                print(e)
+                return {'message': 'An error occred while creating a comment'}, 500
+            return comment.json(), 201
+            

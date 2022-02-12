@@ -14,8 +14,8 @@ class CommentModel(db.Model):
     comment = db.Column(db.String(120), nullable=False)
     # date = db.Column(db.DateTime, nullable=False)
     
-    user = db.relationship('UserModel')
-    moto = db.relationship('MotorcycleModel')
+    # user = db.relationship('UserModel')
+    # moto = db.relationship('MotorcycleModel')
     
     def __init__(self, user_id, moto_id, title, comment):
         # self.id= id

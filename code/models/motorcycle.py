@@ -16,9 +16,9 @@ class MotorcycleModel(db.Model):
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    user = db.relationship('UserModel', backref="users", uselist=False)
+    # user = db.relationship('UserModel', backref="users", uselist=False)
     # rents = db.relationship("RentModel", backref="motorcycles", lazy=True,cascade="all,delete")
-    comments = db.relationship("CommentModel", backref="motorcycles",  uselist=False,cascade="all,delete")
+    comments = db.relationship("CommentModel", backref="motorcycles",  uselist=True,cascade="all,delete")
     
     def __init__(self,user_id, make,model,year,price,description,photo):
         self.user_id = user_id
@@ -41,11 +41,12 @@ class MotorcycleModel(db.Model):
             'description':self.description,
             'photo':self.photo
             }, 
-            # "comments":[comment.json() for comment in self.comments.all()]
+            "comments":[comment.json() for comment in self.comments]
         }
         
     @classmethod
     def find_by_id(cls, id):
+
         return cls.query.filter_by(id=id).first()
     
     
@@ -59,5 +60,6 @@ class MotorcycleModel(db.Model):
 
     
     def delete_from_db(self):
+        
         db.session.delete(self)
         db.session.commit()
