@@ -1,6 +1,10 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+import os
+
+from dotenv import load_dotenv
 
 # no longer needed
 # from security import authenticate, identity
@@ -14,17 +18,17 @@ from db import db
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+load_dotenv(".env")
+# app.config("DEBUG") = True
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI','sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'muto'
 api = Api(app)
+db.init_app(app)
+jwt = JWTManager(app)
+migrate = Migrate(app,db)
 
-
-
-@app.route('/')
-def home():
-    return 'Hello ulen'
 
 
 
@@ -34,7 +38,6 @@ def create_tables():
 
 
 
-jwt = JWTManager(app)
 
 api.add_resource(UserRegister, '/register')
 api.add_resource(Motorcycle, '/post')

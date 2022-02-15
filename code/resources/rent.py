@@ -38,6 +38,7 @@ class Rent(Resource):
                 rented = RentModel(user_id, moto_id, data["start_date"], data["end_date"], )
 
                 try:
+                   
                     rented.save_to_db()
                 except Exception as e:
                     print(e)
